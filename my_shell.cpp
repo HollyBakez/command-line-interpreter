@@ -35,6 +35,7 @@ string command_check(string shell_command){
   return foo; 
 }
 
+DWORD WINAPI MyThreadFunction(LPVOID Param);
 
 int main(){
 /* delim to check for command arguments amount */
@@ -45,6 +46,7 @@ int main(){
     cout<< "-----Welcome to MyShell----- \n";
 
     while(1){
+
       cout<< "-----Please enter a command----- \n";
       string user_command;
       getline(cin, user_command);
@@ -61,7 +63,7 @@ int main(){
       while(token){
       // ex. ping foo 
       // token[0] = ping, token[1] = foo
-        cout << token << endl;
+        //cout << token << endl;
 
       /* checks dir command */
         if (token == com_list[0]){
@@ -70,8 +72,14 @@ int main(){
 
       /* checks ping command */
         if (token == com_list[1]){
+          cout << token << endl;
           char* first_arg = token;
           token = strtok(NULL, delim);
+          // checks to see if there are enough arguments
+          if(token == NULL){
+            cout<<"invalid arguments, please try again... \n";
+            break;
+          }
           string combine = first_arg;
           combine.append(" ");
           combine.append(token);
@@ -79,9 +87,26 @@ int main(){
         
         }
 
-        if (token == com_list[2]){
-          /* check other cases */
+      /* checks for echo note: assumption that arguments do not contain spaces  ie "hello world"*/
+        if (token == com_list[2]){ 
+          cout << token << endl;
+          char* first_arg = token;
+          token = strtok(NULL, delim);
+          // if only one argument is given
+          if(token == NULL){
+            system(first_arg);
+            break;
+          }
+          else{
+            string combine = first_arg;
+            cout << token << endl;
+            combine.append(" ");
+            combine.append(token);
+            system(combine.c_str());
+          }
+      
         }
+
         token = strtok(NULL, delim);
     }
   }
