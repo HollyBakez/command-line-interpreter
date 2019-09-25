@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <stdio.h>
+#include <stdlib.h>
 #include <windows.h>
 
 using namespace std;
@@ -42,12 +43,27 @@ string GetCommand(string command){
 int main(){
     DWORD thread_id;
     HANDLE thread_handle;
+/* delim to check for command arguments amount */
+    char delim[] = " ";
+    cout<< "-----Welcome to MyShell----- \n";
+    cout<< "Please enter a command \n";
     string user_command;
+    getline(cin, user_command);
+/* token should be the strings prior to whitespaces indicating seperate arguments */
+    char *token = strtok(user_command, delim);
+    while(token){
+      cout << token << endl;
+      token = strtok(NULL, delim);
+    }
 
-    while(1){
+    
+ /* take user command and convert it to an array */
+  
+
+    //while(1){
       /* insert code here */
 
-    }
+    //}
 
     return 0;
 }
