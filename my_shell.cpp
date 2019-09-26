@@ -1,3 +1,6 @@
+// my_shell.cpp : Simple Command Line Interpreter
+// Copyright(c) Holland Ho 9/14/19
+
 #include <iostream>
 #include <stdio.h>
 #include <stdlib.h>
@@ -6,7 +9,7 @@
 #include <vector>
 using namespace std;
 
-
+/* thread function to execute */
 void* ExecuteRunner(void* arg){
     
     system((char*) arg);
@@ -22,8 +25,10 @@ int main(){
     pthread_attr_t attr;
     pthread_attr_init(&attr);
     string user_command; 
+
+    /* list of supported commands*/
     vector<string> com_list;
-    com_list.push_back("ls");
+    com_list.push_back("dir");
     com_list.push_back("ping");
     com_list.push_back("echo");
     com_list.push_back("help");
@@ -33,22 +38,17 @@ int main(){
     com_list.push_back("path");
     com_list.push_back("vol");
 
-
-                             /*
-    string com_list[9] = {"ls", "ping", "echo", 
-                            "help", "color", "notepad", "tasklist", 
-                             "path", "vol"};
-                             */
     cout << "---- Welcome to MyShell ---- \n";
 
     while (1){
+      /* set bool if the inputted command exists or not */
         bool com_exist = false;
         cout << "---- To exit, enter 'exit' ---- \n";
         cout << "---- Please enter a command ---- \n";
         getline(cin, user_command);
 
         if (user_command == "exit" || user_command == "Exit"){
-            cout << "Thank you for using me! \n";
+            cout << "Thank you for using myShell! \n";
             break;
         }
     /* converts user command into char */
